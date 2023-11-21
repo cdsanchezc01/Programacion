@@ -5,13 +5,15 @@ import java.util.Scanner;
 public class Agenda {
 //	ATRIBUTOS
 	DatosPersona[] agenda;
-	
+	Scanner teclado;
 	
 	Agenda(int numEntradas){
 		
 		agenda=new DatosPersona[numEntradas];
+	    teclado=new Scanner(System.in);
 	}
 	
+//	METODOS 
 	
 	int insertarEntrada() {
 		
@@ -25,11 +27,9 @@ public class Agenda {
 			}
 		}
 		
-		
 		if(encontrado==true) {
 //			HE ECONTRADO EL ELEMENTO
 //			LE PEDIMOS AL USUARIO LOS DATOS DEL NUEVO REGISTRO
-			Scanner teclado=new Scanner(System.in);
 			
 			System.out.println("Introduce el nombre");
 			String nombre=teclado.nextLine();
@@ -47,8 +47,7 @@ public class Agenda {
 			
 //			INSERTO EL OBJETO EN LA POSICION BUSCADA EN LA AGENDA
 			agenda[i]=nuevoRegistro;
-			return i;
-			
+			return i;	
 		}
 		else {
 //			LA AGENDA ESTABA LLENA 
@@ -58,7 +57,51 @@ public class Agenda {
 	}
 	
 	
-    public	void mostrarEntradasAgenda() {
+	public void compactarAgenda() {
+		
+		DatosPersona[] arAuxiliar=new DatosPersona[agenda.length];
+		
+		int j=0;
+		
+		for (int i=0; i<agenda.length; i++) {
+			if(agenda[i]!=null) {
+				arAuxiliar[i]=agenda[i];
+				
+				j++;
+			}
+		}
+		agenda=arAuxiliar;
+	}
+	
+	
+//	-------------------------------------
+//		ASI PODEMOS PONER COMENTARIOS E INDICAR ACCIONES
+//	-------------------------------------
+	public void buscarAgenda() {
+		
+		System.out.println("Introduce el término de búsqueda : ");
+		String termino=teclado.nextLine();
+		for(int i=0; i<agenda.length;i++) {
+			if(agenda[i]!=null) {
+				boolean deboMostrar=false;
+				if(agenda[i].getNombre().toUpperCase().contains(termino))
+					deboMostrar=true;
+				else if(agenda[i].getNumMovil().toUpperCase().contains(termino))
+					deboMostrar=true;
+				else if(agenda[i].getNumFijo().toUpperCase().contains(termino))
+					deboMostrar=true;
+				else if(agenda[i].geteMail().toUpperCase().contains(termino))
+					deboMostrar=true;
+				
+				if(deboMostrar==true);
+				
+			}
+		}
+	}
+	
+	
+	
+	public	void mostrarEntradasAgenda() {
 //    	RECORREMOS LAS DIFERENTES ENTRADAS DE LA AGENDA
     	System.out.println("-------------------------------");
     	for(int i=0; i<agenda.length;  i++) {
@@ -71,10 +114,11 @@ public class Agenda {
     	System.out.println("-------------------------------");
     }
 	
-    
-    public int borrarEntrada() {
+	
+	
+	
+	  public int borrarEntrada() {
     	int entradaBorrada=-1;
-    	Scanner teclado=new Scanner(System.in);
     	System.out.println("Introduce el índice de la entrada a borrar : ");
     	int numero=teclado.nextInt();
     	teclado.nextLine();
@@ -87,9 +131,11 @@ public class Agenda {
     	else System.out.println("La entrada seleccionada no tiene datos");
     	return entradaBorrada;
     }
+	  
+	  
+	  
     public int modificarEntrada() {
     	int entradaModificada=-1;
-    	Scanner teclado=new Scanner(System.in);
     	System.out.println("Introduce el índice de la entrada a modificar : ");
     	int numero=teclado.nextInt();
     	teclado.nextLine();
