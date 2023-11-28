@@ -12,6 +12,7 @@ public class Ruleta {
 		indicador=0; // LA RULETA APUNTA A LA PRIMERA POSICION
 	}
 	
+	
 	String getValorActual() {
 		return ruleta[indicador];
 	}

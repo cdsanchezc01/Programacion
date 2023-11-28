@@ -1,5 +1,5 @@
 package MisClases;
 
-public class Juego {
+public class juego {
 
 }
