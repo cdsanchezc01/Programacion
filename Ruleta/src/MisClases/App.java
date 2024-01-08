@@ -10,12 +10,17 @@ public class App {
 		miRuleta.lanzarRuleta();
 		miRuleta.lanzarRuleta();
 */
-		Panel miPanel=new Panel("Te has echo mayor si...",
-				"Si usas \n pantuflas y bata");
+			
+//		Panel miPanel=new Panel("Te has echo mayor si...",
+//				"Si usas \n pantuflas y bata");
 	
-		miPanel.mostrarEstadoActual();
-		miPanel.comprobarLetra('s');
-		miPanel.mostrarEstadoActual();
+//		miPanel.mostrarEstadoActual();
+//		miPanel.comprobarLetra('s');
+//		miPanel.mostrarEstadoActual();
+		
+		
+		
+		
 	}
 	
 	
