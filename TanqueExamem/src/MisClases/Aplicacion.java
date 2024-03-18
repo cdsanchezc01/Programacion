@@ -1,4 +1,6 @@
+package MisClases;
 import java.util.Scanner;
+
 
 public class Aplicacion {
 
