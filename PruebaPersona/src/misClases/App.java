@@ -14,7 +14,10 @@ public class App {
 		RandomAccessFile fichero=new RandomAccessFile("c:\\Ejemplos\\personas.dat", "rw");
 		
 //		Guardamos los datos de la primera persona
-		fichero.writeChars(persona1.nombre);
+		StringBuffer sb;
+		sb=new StringBuffer(persona1.nombre);
+		sb.setLength(30);  // limitas los campos
+		fichero.writeChars(sb.toString());
 		fichero.writeUTF(persona1.apellido);
 		fichero.writeFloat(persona1.altura);
 		fichero.write(persona1.edad);
@@ -32,7 +35,7 @@ public class App {
 		fichero.write(persona3.edad);
 
 		fichero.close();
-/*	
+
 		fichero=new RandomAccessFile("c:\\Ejemplos\\personas.dat", "r");
 		
 //		Leemos los datos del primer registro
@@ -42,7 +45,7 @@ public class App {
 		int edad=fichero.readInt();
 		
 		System.out.println(nombre + "-" + apellidos + "-" + altura + "-" + edad);
-*/		
+
 		
 	
 	}
