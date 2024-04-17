@@ -24,7 +24,7 @@ public class cuentaAhorro extends Cuenta {
 
 
 
-	public double getSaldoMinimo() {
+	public double getSaldoMinimo() {  
 		return saldoMinimo;
 	}
 
