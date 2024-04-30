@@ -20,7 +20,7 @@ public class Aplicacion {
 
 		final String URL = "jdbc:mysql://localhost:3306/world";
 		final String USUARIO = "root";
-		final String PWD = "root";
+		final String PWD = "9876";
 
 		// Abrimos la conexi�n con la base de datos
 		// Utilizo un try-with-resources para que se cierre autom�ticamente la conexi�n
