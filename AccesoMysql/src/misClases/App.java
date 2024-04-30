@@ -6,16 +6,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Scanner;
 
 
 public class App {
+	static Scanner teclado=new Scanner(System.in);
+	static Arrraylist<Pais> lista=new Arrraylist<Pais>();
 
 	public static void main(String[] args) {
 	
 		final String URL = "jdbc:mysql://localhost:3306/world";
 		final String USUARIO = "root";
-		final String PWD = "root";
-		
+		final String PWD = "9876";
+		 
 		Connection conexion=null;
 		Statement statement=null;
 		PreparedStatement pStatement=null;
@@ -24,7 +27,7 @@ public class App {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			
-			// Paso 2 Abrimos una conexi�n con el servidor
+			// Paso 2 Abrimos una conexi�n con el servidor 
 			conexion=DriverManager.getConnection(URL, USUARIO, PWD);
 			
 			// Paso 3 Lanzamos una consulta sobre el servidor
@@ -36,6 +39,7 @@ public class App {
 
             pStatement=conexion.prepareStatement(consulta);
             
+//            Se pasa dato  
             pStatement.setString(1,"Europe");
             
             
