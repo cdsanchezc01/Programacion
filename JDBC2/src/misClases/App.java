@@ -84,7 +84,7 @@ public class App {
 		String continente = App.teclado.nextLine(); 		
 				
 
-		String consulta = FAlta cosnutla
+		String consulta = FAlta consulta
 
 		// Creo un PreparedStatement para ejecutar la sentencia parametrizada
 		try (PreparedStatement pStatement = conexion.prepareStatement(consulta)) {
