@@ -126,7 +126,7 @@ public class GestorExamen {
 //----------------Fichero-----------------------------------
 	void guardarDatosFichero() throws Exception {
 		DataOutputStream fichero = new DataOutputStream(
-				new BufferedOutputStream(new FileOutputStream("c:\\Ejemplos\\Examen.dat")));
+				new BufferedOutputStream(new FileOutputStream("C:\\Ejemplos\\Examen.dat")));
 
 		for (int i = 0; i < lista.size(); i++) {
 			Examen examen = lista.get(i);
@@ -149,7 +149,7 @@ public class GestorExamen {
 
 	void cargarDatosFichero() throws Exception {
 		DataInputStream fichero = new DataInputStream(
-				new BufferedInputStream(new FileInputStream("c:\\Ejemplos\\Examen.dat")));
+				new BufferedInputStream(new FileInputStream("C:\\Ejemplos\\Examen.dat")));
 
 		while (fichero.available() > 0) {
 			int codigo = fichero.readInt();
