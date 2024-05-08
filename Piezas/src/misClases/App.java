@@ -22,7 +22,7 @@ public class App {
 		boolean salir=false;
 		while(salir==false) {
 			System.out.println(" 1- Añadir nueva pieza");
-			System.out.println(" 2- Buscar examen");
+			System.out.println(" 2- Buscar pieza");
 			System.out.println(" 3- Borrar pieza");
 			System.out.println(" 0- Salir");
 			
