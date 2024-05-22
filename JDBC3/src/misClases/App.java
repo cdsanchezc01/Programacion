@@ -71,7 +71,7 @@ public class App {
 		}
 
 		// Pedimos el nombre del ambalse
-		System.out.print("Introduce el nombre del embalse :");
+		System.out.print("Introduce el cod del embalse :");
 		String nomEmbalse = App.teclado.nextLine();
 
 		String consulta =  "select CodEmbalse, Nombre, AnioCreacion, Capacidad, NivelActual from embalses where nombre =  ? ";
@@ -108,7 +108,17 @@ public class App {
 		}
 	}
 //---------------------------------------------------------------------------------
-/*	static void cargarListaCapitales(Connection conexion) {
+	static void cargarListaCapitales(Connection conexion) {
+		
+		System.out.print("Introduce el codido  del embalse :");
+		int  codEmbalse = App.teclado.nextInt();
+		App.teclado.nextLine();
+		
+		System.out.println(" Introduce el nuevo nivel:  ");
+		int nuevoNivel = App.teclado.nextInt();
+		App.teclado.nextLine();
+		
+		
 
 		String sentenciaSQL  = "select * from embalses where nombre = 'embalses'= ?;	"; 
 
@@ -137,5 +147,5 @@ public class App {
 		}
 
 	}
-*/
+
 }

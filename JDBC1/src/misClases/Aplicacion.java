@@ -83,11 +83,14 @@ public class Aplicacion {
 		try (PreparedStatement pStatement = conexion.prepareStatement(consulta)) {
 			// Le asigno valor a los par�metros
 			pStatement.setString(1, nomPais);
+			// executeQuery devulve instancia del ResultSet
+			// executeUpdate devulve  el numero de registros afectos 
 			try (ResultSet resultado = pStatement.executeQuery()) {
 				int numRegistros = 0;
 				while (resultado.next()) {
 					numRegistros++;
 					// Leo los datos del registro
+					//Se pone el nombre de campo tal cual este en el select
 					String codigo = resultado.getString("code");
 					String nombre = resultado.getString("name");
 					String continente = resultado.getString("continent");
