@@ -1,0 +1,238 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DatabaseHelper {
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/quotes_db";
+    private static final String USER = "username";
+    private static final String PASS = "password";
+
+    public Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(DB_URL, USER, PASS);
+    }
+
+    // Método para verificar si el código de idioma es válido
+    public boolean isValidLanguage(int languageCode) {
+        String query = "SELECT COUNT(*) FROM languages WHERE id = ?";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, languageCode);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Método para obtener una cita aleatoria
+    public Quote getRandomQuote(int languageCode) {
+        String query = "SELECT quote_text, author FROM quotes WHERE language_id = ? ORDER BY RAND() LIMIT 1";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, languageCode);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Quote(rs.getString("quote_text"), rs.getString("author"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    // Método para buscar citas
+    public List<Quote> searchQuotes(String term, int languageCode) {
+        List<Quote> quotes = new ArrayList<>();
+        String query = "SELECT quote_text, author FROM quotes WHERE language_id = ? AND (quote_text LIKE ? OR author LIKE ?)";
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, languageCode);
+            stmt.setString(2, "%" + term + "%");
+            stmt.setString(3, "%" + term + "%");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                quotes.add(new Quote(rs.getString("quote_text"), rs.getString("author")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quotes;
+    }
+
+    // Método para exportar datos a CSV
+    public boolean exportToCSV(String path, String separator, boolean includeHeader) {
+        String query = "SELECT q.quote_text, q.author, l.name FROM quotes q JOIN languages l ON q.language_id = l.id";
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query);
+             FileWriter csvWriter = new FileWriter(path)) {
+            
+            if (includeHeader) {
+                csvWriter.append("Cita").append(separator)
+                         .append("Autor").append(separator)
+                         .append("Idioma").append("\n");
+            }
+
+            while (rs.next()) {
+                csvWriter.append(rs.getString("quote_text")).append(separator)
+                         .append(rs.getString("author")).append(separator)
+                         .append(rs.getString("name")).append("\n");
+            }
+
+            csvWriter.flush();
+            return true;
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+}
+
+
+main 
+import java.util.Scanner;
+
+public class Main {
+    private static QuoteManager quoteManager = new QuoteManager();
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int option = -1;
+
+        while (option != 5) {
+            showMenu();
+            option = scanner.nextInt();
+            scanner.nextLine();  // Clear the newline
+
+            switch (option) {
+                case 0:
+                    System.out.println("Ingrese el código del idioma:");
+                    int idiomaCodigo = scanner.nextInt();
+                    scanner.nextLine();  // Clear the newline
+                    quoteManager.setDefaultLanguage(idiomaCodigo);
+                    break;
+                case 1:
+                    quoteManager.showRandomQuote();
+                    break;
+                case 2:
+                    System.out.println("Ingrese el término de búsqueda:");
+                    String searchTerm = scanner.nextLine();
+                    quoteManager.searchQuotes(searchTerm);
+                    break;
+                case 4:
+                    System.out.println("Ingrese la ruta del archivo CSV:");
+                    String path = scanner.nextLine();
+                    System.out.println("Ingrese el separador (por defecto es ','):");
+                    String separator = scanner.nextLine();
+                    if (separator.isEmpty()) {
+                        separator = ",";
+                    }
+                    System.out.println("¿Incluir línea de cabecera? (true/false):");
+                    boolean includeHeader = scanner.nextBoolean();
+                    scanner.nextLine();  // Clear the newline
+                    quoteManager.exportToCSV(path, separator, includeHeader);
+                    break;
+                case 5:
+                    System.out.println("Saliendo...");
+                    break;
+                default:
+                    System.out.println("Opción no válida.");
+                    break;
+            }
+        }
+
+        scanner.close();
+    }
+
+    private static void showMenu() {
+        System.out.println("Seleccione una opción:");
+        System.out.println("0 - Establecer idioma por defecto.");
+        System.out.println("1 - Mostrar cita aleatoria.");
+        System.out.println("2 - Buscar citas.");
+        System.out.println("4 - Exportar base de datos a CSV.");
+        System.out.println("5 - Salir.");
+    }
+}
+
+
+
+
+1 
+import java.time.LocalDate;
+
+abstract class Notificación {
+    protected String texto;
+    protected String emisor;
+    protected LocalDate fecha;
+
+    public Notificación(String texto, String emisor, LocalDate fecha) {
+        this.texto = texto;
+        this.emisor = emisor;
+        this.fecha = fecha;
+    }
+
+    @Override
+    public String toString() {
+        return "Notificación de " + emisor + " el " + fecha + ": " + texto;
+    }
+
+    public abstract void enviar();
+}
+
+class NotificaciónSMS extends Notificación {
+    private Integer teléfonoDestino;
+
+    public NotificaciónSMS(String texto, String emisor, LocalDate fecha, Integer teléfonoDestino) {
+        super(texto, emisor, fecha);
+        this.teléfonoDestino = teléfonoDestino;
+    }
+
+    @Override
+    public void enviar() {
+        System.out.println("Enviando SMS a " + teléfonoDestino + ": " + texto);
+    }
+}
+
+class NotificaciónEmail extends Notificación {
+    private String eMailDestino;
+    private String asunto;
+
+    public NotificaciónEmail(String texto, String emisor, LocalDate fecha, String eMailDestino, String asunto) {
+        super(texto, emisor, fecha);
+        this.eMailDestino = eMailDestino;
+        this.asunto = asunto;
+    }
+
+    @Override
+    public void enviar() {
+        System.out.println("Enviando Email a " + eMailDestino + " con asunto \"" + asunto + "\": " + texto);
+    }
+}
+
+
+crear array 
+
+import java.time.LocalDate;
+
+public class Main {
+    public static void main(String[] args) {
+        Notificación[] notificaciones = new Notificación[5];
+
+        notificaciones[0] = new NotificaciónSMS("aaaa aaaaaa", "Emisor 1", LocalDate.of(2024, 5, 21), 777777777);
+        notificaciones[1] = new NotificaciónEmail("bbbb bbbbb", "Emisor 1", LocalDate.of(2024, 5, 21), "fer@fer.es", "Asunto a");
+        notificaciones[2] = new NotificaciónEmail("cccc cccccc", "Emisor 2", LocalDate.of(2024, 5, 21), "julia@julia.es", "Asunto b");
+        notificaciones[3] = new NotificaciónSMS("Ddddd dddd", "Emisor 3", LocalDate.of(2024, 5, 21), 888888888);
+        notificaciones[4] = new NotificaciónSMS("eeee eeeeee", "Emisor 3", LocalDate.of(2024, 5, 21), 999999999);
+
+        enviarNotificaciones(notificaciones);
+    }
+
+    public static void enviarNotificaciones(Notificación[] notificaciones) {
+        for (Notificación notificación : notificaciones) {
+            notificación.enviar();
+        }
+    }
+}

@@ -1,0 +1,41 @@
+package misClases;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Scanner;
+
+public class App {
+	static Scanner teclado = new Scanner(System.in);
+	public static void main(String[] args) {
+		
+		boolean salir=false;
+		while(salir==false) {
+			System.out.println("0-Salir");
+			System.out.println("1-Saludar");
+			
+			int opcion=teclado.nextInt();
+			switch(opcion) {
+			
+			case 0:
+				salir=true;
+				break;
+			case 1:
+				saludar();
+				break;
+			}
+		}
+		teclado.close();
+		
+		static void saludar() {
+			LocalTime horaActual=LocalTime.now();
+			LocalDate fechaActual=LocalDate.now();
+			
+			int parteHora=horaActual.getHour();
+			if (parteHora >=6 && parteHora < 13)
+				mensaje="Hola buenos dias ";
+		}
+
+	}
+
+}
+}

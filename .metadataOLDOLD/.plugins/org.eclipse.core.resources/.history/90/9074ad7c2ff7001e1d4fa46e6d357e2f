@@ -1,0 +1,16 @@
+package misClases;
+
+public class DatosIntegrante {
+	int codIdentificador;
+	String nombre;
+	String nacionalidad;
+	String lugarNacimiento;
+	String fechaNacimeinto;
+	
+	public DatosIntegrante(int codIdentificador, String nombre, String nacionalidad, String lugarNacimiento,
+			String fechaNacimeinto) {
+
+	}
+	
+	
+}

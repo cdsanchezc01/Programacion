@@ -1,0 +1,127 @@
+package misClases;
+
+import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+public class App {
+	static Scanner teclado = new Scanner(System.in);
+	
+	public static void main(String[] args) {
+		final String URL = "jdbc:mysql://localhost:3306/bdCitasCelebres";
+		final String USUARIO = "root";
+		final String PWD = "9876";
+		// Abrimos la conexi�n con la base de datos
+		// Utilizo un try-with-resources para que se cierre autom�ticamente la conexi�n
+		try (Connection conexion = DriverManager.getConnection(URL, USUARIO, PWD)) {
+
+			// Cargo la lista de los pa�ses y sus capitales en la lista
+			cargarListaCapitales(conexion);
+
+			boolean salir = false;
+			while (salir == false) {
+				// Muestro el men� de usuario
+				System.out.println("Seleccione una opción:");
+				System.out.println("0 - Establecer idioma por defecto.");
+				System.out.println("1 - Mostrar cita aleatoria.");
+				System.out.println("2 - Buscar citas.");
+				System.out.println("4 - Exportar base de datos a CSV.");
+				System.out.println("4 - Exportar base de datos a CSV.");
+		        System.out.println("5 - Salir.");
+		        
+		        
+		        }
+		}
+
+				int opcion = teclado.nextInt();
+				teclado.nextLine();
+				switch (opcion) {
+				case 1:
+					mostrarDatosPais(conexion);
+					break;
+				case 2:
+					insertarCiudad(conexion);
+					break;
+				case 3:
+					resumenContinentes(conexion);
+					break;
+				case 4:
+					juegoCapitales();
+					break;
+				case 5:
+					salir = true;
+					break;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Hubo un problema abriendo la conexi�n");
+		}
+
+		// Cerramos el teclado
+		teclado.close();
+		}
+		}
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		  // Método para exportar datos a CSV
+	    public boolean exportarCSV(String path, String separator, boolean includeHeader) {
+	        String query = "SELECT q.quote_text, q.author, l.name FROM quotes q JOIN languages l ON q.language_id = l.id";
+	        try (Connection conn = getConnection();
+	             Statement stmt = conn.createStatement();
+	             ResultSet rs = stmt.executeQuery(query);
+	             FileWriter csvWriter = new FileWriter(path)) {
+	            
+	            if (includeHeader) {
+	                csvWriter.append("Cita").append(separator)
+	                         .append("Autor").append(separator)
+	                         .append("Idioma").append("\n");
+	            }
+
+	            while (rs.next()) {
+	                csvWriter.append(rs.getString("quote_text")).append(separator)
+	                         .append(rs.getString("author")).append(separator)
+	                         .append(rs.getString("name")).append("\n");
+	            }
+
+	            csvWriter.flush();
+	            return true;
+	        } catch (SQLException | IOException e) {
+	            e.printStackTrace();
+	        }
+	        return false;
+	    }
+	}
+
+
+	
+

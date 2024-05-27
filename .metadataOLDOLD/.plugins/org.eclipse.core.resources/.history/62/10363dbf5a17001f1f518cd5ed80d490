@@ -1,0 +1,133 @@
+package misClases;
+
+import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+
+public class App {
+	static Scanner teclado = new Scanner(System.in);
+
+	public static void main(String[] args) {
+		final String URL = "jdbc:mysql://localhost:3306/bdCitasCelebres";
+		final String USUARIO = "root";
+		final String PWD = "9876";
+		// Abrimos la conexi�n con la base de datos
+//		Recuerda que se tiene que cerrar
+
+		  public Connection getConnection() throws SQLException {
+		        return DriverManager.getConnection(URL, USUARIO, PWD);
+		    }
+			// Cargo la lista de los pa�ses y sus capitales en la lista
+			cargarListaCapitales(conexion);
+
+			boolean salir = false;
+			while (salir == false) {
+				// Muestro el men� de usuario
+				System.out.println("Seleccione una opción:");
+				System.out.println("0 - Establecer idioma por defecto.");
+				System.out.println("1 - Mostrar cita aleatoria.");
+				System.out.println("2 - Buscar citas.");
+				System.out.println("4 - Exportar base de datos a CSV.");
+				System.out.println("4 - Exportar base de datos a CSV.");
+				System.out.println("5 - Salir.");
+
+				int opcion = teclado.nextInt();
+				teclado.nextLine();
+
+				switch (opcion) {
+				case 0:
+					System.out.println("Ingrese el código del idioma:");
+					int idiomaCodigo = teclado.nextInt();
+					teclado.nextLine();
+					quoteManager.setDefaultLanguage(idiomaCodigo);
+					break;
+				case 1:
+					quoteManager.showRandomQuote();
+					break;
+				case 2:
+					System.out.println("Ingrese el término de búsqueda:");
+					String termino = teclado.nextLine();
+					quoteManager.searchQuotes(termino);
+					break;
+				case 4:
+					System.out.println("Ingrese la ruta del archivo CSV:");
+					String ruta = teclado.nextLine();
+					System.out.println("Ingrese el separador (por defecto es ','):");
+					String separador = teclado.nextLine();
+					if (separador.isEmpty()) {
+						separador = ",";
+					}
+					System.out.println("¿Incluir línea de cabecera? (true/false):");
+					boolean incluirCabeza = teclado.nextBoolean();
+					teclado.nextLine(); 
+					quoteManager.exportToCSV(termino, separador, incluirCabeza);
+					break;
+				case 5:
+					System.out.println("Saliendo...");
+					salir = true;
+					break;
+				default:
+					System.out.println("Opción no válida.");
+					break;
+				}
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Hubo un problema abriendo la conexi�n");
+		}
+
+		// Cerramos el teclado
+		teclado.close();
+	}
+    //verificamos si el codigo de idioma es valido
+    public boolean verificaIdioma(int codIdioma) {
+        String consulta = " SELECT COUNT(*) \r\n"
+        		+ " FROM idiomas \r\n"
+        		+ " WHERE codIdioma; = ?";
+        try (Connection conexion = getConnection();
+             PreparedStatement pStatement = conexion.prepareStatement(consulta)) {
+        	pStatement.setInt(1, codIdioma);
+            ResultSet resultado = pStatement.executeQuery();
+            if (resultado.next()) {
+                return resultado.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+	//  exportar datos a CSV
+	public boolean exportarCSV(String path, String separator, boolean includeHeader) {
+		String consulta =  "SELECT c.cita, c.codAutor, i.nombre FROM citas c JOIN idiomas i on c.codIdioma = i.codIdioma";
+		try (Connection conexion = getConnection();
+				Statement statement  = conexion.createStatement();
+				ResultSet resultado = statement.executeQuery(consulta);
+				FileWriter Writer = new FileWriter(path)) {
+
+			if (includeHeader) {
+				Writer.append("Cita").append(separator).append("Autor").append(separator).append("Idioma")
+						.append("\n");
+			}
+
+			while (resultado.next()) {
+				Writer.append(resultado.getString("c.cita")).append(separator).append(resultado.getString("Autor"))
+						.append(separator).append(resultado.getString("nombre")).append("\n");
+			}
+
+			Writer.flush();
+			return true;
+		} catch (SQLException e) {
+			System.out.println(" Hubo un problema");
+		}
+		return false;
+	}
+}

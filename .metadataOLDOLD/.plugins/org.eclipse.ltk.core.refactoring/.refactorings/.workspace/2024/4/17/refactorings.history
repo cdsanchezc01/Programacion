@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;BD&apos; to &apos;AccesoMysql&apos;&#x0D;&#x0A;- Original element: &apos;BD&apos;&#x0D;&#x0A;- Renamed element: &apos;BD&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename Java project &apos;BD&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=BD" name="AccesoMysql" references="true" stamp="1713862070922" version="1.0"/>
+</session>

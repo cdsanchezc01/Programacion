@@ -1,0 +1,17 @@
+package misClases;
+
+public class Jugador extends DatosIntegrantes{
+	
+	int dorsal;
+	String posicion;
+	int añoComienzo;
+	double altura;
+	
+	public Jugador(int dorsal, String posicion, int añoComienzo, double altura) {
+		this.dorsal=dorsal;
+		this.posicion=posicion;
+		this.añoComienzo=añoComienzo;
+		this.altura=altura;
+	}
+
+}

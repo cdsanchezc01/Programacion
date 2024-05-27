@@ -1,0 +1,14 @@
+package misClases;
+
+public class StaffTecnico {
+	String cargo;
+	boolean fueJugador;
+	int añoComienzo;
+	
+	public StaffTecnico(String cargo, boolean fueJugador, int añoComienzo) {
+		this.cargo=cargo;
+		this.fueJugador=fueJugador;
+		this.añoComienzo=añoComienzo;
+	
+	}
+}
