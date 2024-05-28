@@ -1,39 +1,35 @@
 package misClases;
 
 public class Pais {
-	
-	private String nombre;
-	private String capital;
-	private String continente;
+
+	private String ciudad;
+	private String pais;
 	
 	Pais() {
 		
 	}
 	
-	public Pais(String nombre, String capital, String continente) {
-		this.nombre = nombre;
-		this.capital = capital;
-		this.continente = continente;
+	public Pais(String ciudad, String pais) {
+		this.ciudad = ciudad;
+		this.pais = pais;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public String getCiudad() {
+		return ciudad;
 	}
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+
+	public void setCiudad(String ciudad) {
+		this.ciudad = ciudad;
 	}
-	public String getCapital() {
-		return capital;
+
+	public String getPais() {
+		return pais;
 	}
-	public void setCapital(String capital) {
-		this.capital = capital;
+
+	public void setPais(String pais) {
+		this.pais = pais;
 	}
-	public String getContinente() {
-		return continente;
-	}
-	public void setContinente(String continente) {
-		this.continente = continente;
-	}
+
 	
-
+	
 }
