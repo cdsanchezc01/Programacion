@@ -38,7 +38,7 @@ class Cuadrilatero extends Forma {
 	void pintar(Color colorPerimetro, Color colorFondo) {
 		setColorPerimetro(colorPerimetro);
 		setColorFondo(colorFondo);
-		System.out.println("Pintando el Cuadrilátero con color de perímetro: " + colorPerimetro + " y color de fondo: "
+		System.out.println("Pintando el Cuadrilátero con color de perímetro: " + colorPerimetro + " y color de fondo: " 
 				+ colorFondo);
 	}
 

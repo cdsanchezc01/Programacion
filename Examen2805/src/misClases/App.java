@@ -104,7 +104,7 @@ public class App {
 				+ "FROM propiedades p JOIN localidades l ON p.CodLocalidad = l.CodLocalidad\r\n"
 				+ "WHERE p.Tipo = ? ";
 		
-		if (!localidad.isEmpty()) {
+		if (!localidad.isEmpty()) {			
 			consulta += " AND l.Nombre = ? ";
 		}
 		consulta += " GROUP BY l.Nombre";

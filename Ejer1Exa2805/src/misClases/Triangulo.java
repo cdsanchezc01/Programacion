@@ -36,8 +36,7 @@ class Triangulo extends Forma {
 	void pintar(Color colorPerimetro, Color colorFondo) {
 		setColorPerimetro(colorPerimetro);
 		setColorFondo(colorFondo);
-		System.out.println(
-				"Pintar Triángulo con color de perímetro: " + colorPerimetro + " y color de fondo: " + colorFondo);
+		System.out.println("Pintar Triángulo con color de perímetro: " + colorPerimetro + " y color de fondo: " + colorFondo);
 	}
 
 	@Override
